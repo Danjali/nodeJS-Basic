@@ -1,28 +1,34 @@
-const Request = require("request");
- 
- const postProjectData = (projectData) => {
-    const requestPayload = projectData;
-    const base64 = require('base-64'),
-      username = 't.m.mahajan@gmail.com',
-      password = 'Tej.12345',
-      headers = {
+const request = require("request");
+
+const postProjectData = (req, res, next) => {
+    let data = req.body;
+    // let headers = {
+    //         'Content-Type': 'application/json'
+    //     };
+     const base64 = require('base-64'),
+      username = 'd930106',
+      password = 'asD@1907';
+      let headers={
         'Content-Type': 'application/json',
         'Authorization': 'Basic ' + base64.encode(username + ':' + password)
-        };
-    Request.post({
-      "headers": headers ,
-      "url": "https://api.bitbucket.org/2.0/teams/shared_teamtest1/projects/",
-      "body": JSON.stringify(requestPayload),
-  }, (error, response, body) => {
-      console.log('-------------------------',response);
-    //   console.log(body);
-      if(error) {
-          return console.dir(error);
-      }
-      if(response){
+    };
+    request({
+        // url: 'https://2a051b39-ee78-48c3-ae04-8df326acdd13.mock.pstmn.io/rest/api/2/issue/', // Mock URL to hit
+        url:'https://jira.ae.sda.corp.telstra.com/rest/api/2/issue/',
+        qs: data,
+        "body": JSON.stringify(data),
+        "method": 'POST',
+        "headers": headers 
+        }, function(error, response, body){
+        console.log(response.statusCode);
+        if(error) {
+            console.log(error);
+        } 
+        else if(response.statusCode === 201){
+          console.log(body);
+          res.send(response.body); 
+        }
         return response;
-      }
-      console.dir(JSON.parse(body));
-  });
-  }
+});
+}
  module.exports = postProjectData;
