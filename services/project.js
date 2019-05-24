@@ -2,9 +2,6 @@ const request = require("request");
 
 const postProjectData = (req, res, next) => {
     let data = req.body;
-    // let headers = {
-    //         'Content-Type': 'application/json'
-    //     };
      const base64 = require('base-64'),
       username = 'd930106',
       password = 'asD@1907';
@@ -14,13 +11,13 @@ const postProjectData = (req, res, next) => {
     };
     request({
         // url: 'https://2a051b39-ee78-48c3-ae04-8df326acdd13.mock.pstmn.io/rest/api/2/issue/', // Mock URL to hit
-        url:'https://jira.ae.sda.corp.telstra.com/rest/api/2/issue/',
+        url:'https://jira.ae.sda.corp.telstra.com/rest/api/2/issue/bulk',
         qs: data,
         "body": JSON.stringify(data),
         "method": 'POST',
         "headers": headers 
         }, function(error, response, body){
-        console.log(response.statusCode);
+        console.log(response);
         if(error) {
             console.log(error);
         } 
@@ -31,4 +28,5 @@ const postProjectData = (req, res, next) => {
         return response;
 });
 }
+
  module.exports = postProjectData;
